@@ -22,6 +22,10 @@ Link it from Burp Suite...
 
 ## Usage
 
-Whatever sound (`.mp3`) files are in `<root>/sounds/in_use` when the plugin is loaded get randomly picked from when an issue is encountered.
+Whatever sound (`.wav`) files are in `<root>/sounds/in_use` when the plugin is loaded get randomly played when scanning encounters an issue.
 
-Not much to it. There's a little bit of console output as to what's playing.
+In testing this works as expected with `.wav` and **doesn't work with** `.mp3`.
+
+Check out `<root>/sounds/library` too, for more sounds you can copy in.
+
+There's a little bit of console output as to what's playing.

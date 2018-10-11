@@ -18,16 +18,16 @@ from java.io import ByteArrayInputStream
 from java.io import File
 from java.io import PrintWriter\
 
-from os import listdir
+from os import getcwd, listdir
 
-from os.path import isfile, join
+from os.path import abspath, dirname, isfile, join
 
 import random
 
 
 def getRandomSoundFilePath():
-    sound_path = './sounds/in_use'
-    sound_files = [f for f in listdir(sound_path) if isfile(join(sound_path, f))]
+    sound_path = join(getcwd(), 'sounds', 'in_use')
+    sound_files = [join(sound_path, f) for f in listdir(sound_path) if isfile(join(sound_path, f))]
     random_sound = random.choice(sound_files)
     return random_sound
 
@@ -53,7 +53,7 @@ class BurpExtender(IBurpExtender, IScannerListener, IExtensionStateListener):
     # Implement IScannerListener
     def newScanIssue(self, issue):
         sound_file = getRandomSoundFilePath()
-        self._stdout.println('New scan issue, playing %s', sound_file)
+        self._stdout.println('New scan issue, playing ' + sound_file)
         playSound(sound_file)
 
     # Implement IExtensionStateListener
