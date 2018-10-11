@@ -1,6 +1,8 @@
 """
 Burp Suite - Soundkit plugin
 
+*Only works with Burp Suite Professional, sorry!
+
 (Python 2.7 code meant for consumption by Burp Suite Jython)
 """
 
