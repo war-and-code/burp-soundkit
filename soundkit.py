@@ -13,9 +13,10 @@ from burp import IExtensionStateListener
 from java.io import ByteArrayInputStream
 from java.io import PrintWriter
 
-##from javax.sound.sampled import *
 
-##import system
+def playsound(sound):
+    # TODO
+    return
 
 
 class BurpExtender(IBurpExtender, IScannerListener, IExtensionStateListener):
@@ -34,28 +35,16 @@ class BurpExtender(IBurpExtender, IScannerListener, IExtensionStateListener):
     def newScanIssue(self, issue):
         sound_file = self.getRandomSoundFilePath()
         self._stdout.println('New scan issue, playing %s', sound_file)
-        self.playSound(sound_file)
+        playsound(sound_file)
 
     # Implement IExtensionStateListener
     def extensionUnloaded(self):
+        sound_file = self.getRandomSoundFilePath()
+        playsound(sound_file)
         self._stdout.println('Extension unloaded')
 
     def getRandomSoundFilePath(self):
         # TODO get list of available sound files' paths
         # TODO randomly pick one of the available sound files' paths
         # TODO return that instead of the hard-coded path below
-        return 'C:\\Users\\rgingeleski\\workspace\\burp-sound-kit\\sounds\\in_use\\air-horn.mp3'
-
-    def playSound(self, file):
-        ioStream = ByteArrayInputStream(file)
-        """FIXME broken w/o import...
-        stream = AudioSystem.getAudioInputStream(ioStream)
-        format = stream.getFormat()
-        if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED):
-            format = AudioFormat(AudioFormat.Encoding.PCM_SIGNED,format.getSampleRate(),format.getSampleSizeInBits()*2,format.getChannels(),format.getFrameSize()*2,format.getFrameRate(),1)
-            stream = AudioSystem.getAudioInputStream(format, stream)
-            info = DataLine.Info(Clip, stream.getFormat(), int(stream.getFrameLength()*format.getFrameSize()))
-            clip  = AudioSystem.getLine(info)
-            clip.open(stream)
-            clip.start()
-        """
+        return 'C:\\Users\\gingeleski\\Workspace\\burp-soundkit\\sounds\\in_use\\air-horn.mp3'
