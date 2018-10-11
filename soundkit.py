@@ -10,13 +10,30 @@ from burp import IProxyListener
 from burp import IScannerListener
 from burp import IExtensionStateListener
 
+from java.applet.Applet import newAudioClip
+
 from java.io import ByteArrayInputStream
-from java.io import PrintWriter
+from java.io import File
+from java.io import PrintWriter\
+
+from os import listdir
+
+from os.path import isfile, join
+
+import random
 
 
-def playsound(sound):
-    # TODO
-    return
+def getRandomSoundFilePath():
+    sound_path = './sounds/in_use'
+    sound_files = [f for f in listdir(sound_path) if isfile(join(sound_path, f))]
+    random_sound = random.choice(sound_files)
+    return random_sound
+
+
+def playSound(sound):
+    url = File(sound).toURL()
+    audio = newAudioClip(url)
+    audio.play()
 
 
 class BurpExtender(IBurpExtender, IScannerListener, IExtensionStateListener):
@@ -33,18 +50,10 @@ class BurpExtender(IBurpExtender, IScannerListener, IExtensionStateListener):
 
     # Implement IScannerListener
     def newScanIssue(self, issue):
-        sound_file = self.getRandomSoundFilePath()
+        sound_file = getRandomSoundFilePath()
         self._stdout.println('New scan issue, playing %s', sound_file)
-        playsound(sound_file)
+        playSound(sound_file)
 
     # Implement IExtensionStateListener
     def extensionUnloaded(self):
-        sound_file = self.getRandomSoundFilePath()
-        playsound(sound_file)
         self._stdout.println('Extension unloaded')
-
-    def getRandomSoundFilePath(self):
-        # TODO get list of available sound files' paths
-        # TODO randomly pick one of the available sound files' paths
-        # TODO return that instead of the hard-coded path below
-        return 'C:\\Users\\gingeleski\\Workspace\\burp-soundkit\\sounds\\in_use\\air-horn.mp3'
